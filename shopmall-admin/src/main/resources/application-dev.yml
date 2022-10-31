@@ -1,0 +1,49 @@
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://192.168.0.116:3306/shopmall_admin?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=GMT%2B8
+            username: root
+            password: root
+            initial-size: 10
+            max-active: 100
+            min-idle: 10
+            max-wait: 60000
+            pool-prepared-statements: true
+            max-pool-prepared-statement-per-connection-size: 20
+            time-between-eviction-runs-millis: 60000
+            min-evictable-idle-time-millis: 300000
+            #Oracle需要打开注释
+            #validation-query: SELECT 1 FROM DUAL
+            test-while-idle: true
+            test-on-borrow: false
+            test-on-return: false
+            stat-view-servlet:
+                enabled: true
+                url-pattern: /druid/*
+                #login-username: admin
+                #login-password: admin
+            filter:
+                stat:
+                    log-slow-sql: true
+                    slow-sql-millis: 1000
+                    merge-sql: false
+                wall:
+                    config:
+                        multi-statement-allow: true
+
+
+#多数据源的配置
+dynamic:
+  datasource:
+    slave1:
+      driver-class-name: dm.jdbc.driver.DmDriver
+      url: jdbc:dm://192.168.0.116:5236/DAMENG?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      username: shopmall
+      password: shopmall
+    slave2:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost:5432/shopmall_admin
+      username: shopmall
+      password: shopmall
